@@ -1,0 +1,49 @@
+# OCN Layer Registry
+# Master configuration for all integrated subsystems
+
+ocn_version: "1.0.0-alpha"
+governance: omniscient-accord
+monitor: project-monitor-core
+
+layers:
+  finnex:
+    repo: GALACTIC-UNION/finnex-financial-layer
+    agent: NEXUS-PRIME
+    priority: 1
+    dependencies: [commnex, enernex]
+
+  commnex:
+    repo: GALACTIC-UNION/commnex-communication-layer
+    agent: AETHERION
+    priority: 1
+    dependencies: [enernex]
+
+  enernex:
+    repo: GALACTIC-UNION/enernex-energy-layer
+    agent: SINGULARITY-CATALYST
+    priority: 0  # foundational — no dependencies
+    dependencies: []
+
+  bionex:
+    repo: GALACTIC-UNION/bionex-biosynthetic-layer
+    agent: GAIA-NANO
+    priority: 2
+    dependencies: [enernex, commnex]
+
+  tempnex:
+    repo: GALACTIC-UNION/tempnex-temporal-layer
+    agent: CHRONO-FLUX
+    priority: 2
+    dependencies: [enernex, aetherion-quantum-os]
+
+  gravex:
+    repo: GALACTIC-UNION/gravex-gravitational-layer
+    agent: ASTRAL-GUARDIAN
+    priority: 2
+    dependencies: [enernex]
+
+  cognex:
+    repo: GALACTIC-UNION/cognex-consciousness-layer
+    agent: COGNITIVE-ECHO
+    priority: 3  # depends on all other layers being stable
+    dependencies: [finnex, commnex, enernex, bionex, tempnex, gravex]

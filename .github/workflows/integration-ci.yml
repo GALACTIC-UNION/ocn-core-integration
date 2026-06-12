@@ -1,0 +1,43 @@
+name: OCN Integration CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-layer-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate YAML configs
+        run: |
+          python3 -c "
+import yaml, sys
+for f in ['config/layers.yaml', 'config/consensus.yaml', 'config/failsafe.yaml']:
+    try:
+        yaml.safe_load(open(f))
+        print(f'✅ {f} valid')
+    except FileNotFoundError:
+        print(f'⚠️  {f} not yet created')
+    except Exception as e:
+        print(f'❌ {f}: {e}'); sys.exit(1)
+"
+
+  integration-health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check layer registry completeness
+        run: |
+          echo "Verifying all 7 OCN layers are registered..."
+          python3 -c "
+import yaml
+config = yaml.safe_load(open('config/layers.yaml'))
+layers = config.get('layers', {})
+required = ['finnex','commnex','enernex','bionex','tempnex','gravex','cognex']
+missing = [l for l in required if l not in layers]
+if missing: raise SystemExit(f'Missing layers: {missing}')
+print(f'✅ All {len(required)} layers registered')
+"

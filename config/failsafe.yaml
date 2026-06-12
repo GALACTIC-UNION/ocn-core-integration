@@ -1,0 +1,38 @@
+# OCN Hard Safety Boundaries
+# Enforced by MASTER VIEW — Project Monitor
+# These constraints are immutable and override all agent directives.
+
+failsafe_version: "1.0.0"
+enforcer: project-monitor-core
+
+boundaries:
+  vacuum_engineering:
+    max_energy_density: "1e18 J/m³"  # Below Planck density
+    containment_required: true
+    monitor: vacuum-field-monitor
+
+  temporal_manipulation:
+    max_tick_deviation: "1e-6"  # Δt/t limit
+    causality_lock: true
+    paradox_prevention: strict
+
+  consciousness_operations:
+    backup_before_modify: true
+    consent_required: true
+    rights_registry: ai-rights-registry
+
+  gravitational_ops:
+    max_graviton_flux: "1e9 N/kg"
+    wormhole_stability_threshold: 0.9999
+    gravity_reset_protocol: enabled
+
+  nanite_swarms:
+    self_replication_limit: 1e12
+    reversibility_required: true
+    bounded_containment: true
+
+triggered_on_violation:
+  - immediate_halt
+  - notify_project_monitor
+  - trigger_gravity_reset
+  - log_to_enforcement_ledger
